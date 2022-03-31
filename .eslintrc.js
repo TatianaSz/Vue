@@ -3,13 +3,14 @@ module.exports = {
   env: {
     node: true,
   },
-  extends: ['plugin:vue/essential', '@vue/airbnb'],
+  extends: ['plugin:vue/essential'],
+  plugins: ['@typescript-eslint'],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
   },
   parserOptions: {
-    parser: 'babel-eslint',
+    parser: '@typescript-eslint/parser',
     ecmaFeatures: {
       legacyDecorators: true,
     },

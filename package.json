@@ -9,9 +9,6 @@
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit"
   },
-  "resolutions": {
-    "eslint-loader": "2.1.2"
-  },
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^2.6.5",
@@ -30,15 +27,15 @@
     "@vue/cli-plugin-typescript": "4.5.7",
     "@vue/cli-plugin-unit-jest": "^3.11.0",
     "@vue/cli-service": "^3.11.0",
-    "@vue/eslint-config-airbnb": "^4.0.0",
     "@vue/eslint-config-typescript": "^10.0.0",
     "@vue/test-utils": "1.0.0-beta.29",
     "babel-core": "7.0.0-bridge.0",
-    "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
     "eslint": "^5.16.0",
     "eslint-loader": "2.1.2",
     "eslint-plugin-vue": "^5.0.0",
+    "pug": "^3.0.2",
+    "pug-plain-loader": "^1.1.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "ts-loader": "~8.2.0",
@@ -46,6 +43,7 @@
     "vue-template-compiler": "^2.6.10"
   },
   "prettier": {
-    "singleQuote": true
+    "singleQuote": true,
+    "arrowParens": "avoid"
   }
 }
