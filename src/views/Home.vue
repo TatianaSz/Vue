@@ -1,11 +1,13 @@
 <template>
   <div class="home">
-    <h1>Home</h1>
+    <h1>Hfdsfedadaterfftedsaaasddsaaartgfssssdddfsooodfsome</h1>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'home',
-};
+<script lang="ts">
+import Vue from 'vue';
+import Component from 'vue-class-component';
+
+@Component
+export default class YourComponent extends Vue {}
 </script>
