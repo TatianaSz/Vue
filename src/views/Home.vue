@@ -1,22 +1,21 @@
 <template lang="pug">
-  .container
-    SearchBar
+  .container(:class='temp>14?"warm" :"cold"')
     Widget
+    .smth {{location}}
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import SearchBar from './SearchBar.vue';
 import Widget from './Widget.vue';
 
 @Component({
   components: {
-    SearchBar,
     Widget,
   },
 })
 export default class Home extends Vue {
+  private temp: number = 15;
   private errorStr: string = '';
 
   private gettingLocation = false;
@@ -43,4 +42,16 @@ export default class Home extends Vue {
   }
 }
 </script>
-<style lang="stylus"></style>
+<style lang="stylus">
+.container
+  min-height: 100vh
+  width:100%
+  background-size: cover
+  transition: .5s
+
+.warm
+  background-image: url('../images/warm.svg')
+
+.cold
+  background-image: url('../images/cold.svg')
+</style>
