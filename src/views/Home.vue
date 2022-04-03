@@ -9,14 +9,7 @@ import Component from 'vue-class-component';
 import Widget from './Widget.vue';
 import { Action, Getter } from 'vuex-class';
 import { MainInfo } from '@/store/state.type';
-import { HTTP_URL } from './global-variables';
-
-interface fetchPayload {
-  api: HTTP_URL;
-  lat: number;
-  lon: number;
-  key: string;
-}
+import { fetchGeoPayload } from '@/store/modules/widgets';
 
 @Component({
   components: {
@@ -31,7 +24,9 @@ export default class Home extends Vue {
   private readonly API_KEY = '29602fe3815d11d02340cf3792d890c5';
   private readonly URL = 'https://api.openweathermap.org/data/2.5/';
 
-  @Action('weatherGeolocationAction') weatherGeolocationAction: (a: fetchPayload) => any;
+  @Action('weatherGeolocationAction') weatherGeolocationAction: (
+    a: fetchGeoPayload
+  ) => Promise<void>;
   @Getter('getMainInfo') getMainInfo: MainInfo;
   created() {
     if (!('geolocation' in navigator)) {
@@ -51,7 +46,9 @@ export default class Home extends Vue {
           lat: this.location.coords.latitude,
           lon: this.location.coords.longitude,
           key: this.API_KEY,
-        }).then((this.gotWeather = true));
+        }).then(() => {
+          this.gotWeather = true;
+        });
       },
       err => {
         this.gettingLocation = false;

@@ -6,24 +6,20 @@
 </template>
 
 <script lang="ts">
+import { fetchPayload } from '@/store/modules/widgets';
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 import { Action } from 'vuex-class';
 import { HTTP_URL } from './global-variables';
 
-interface fetchPayload {
-  api: HTTP_URL;
-  town: string;
-  key: string;
-}
 @Component
 export default class SearchBar extends Vue {
   @Prop({ required: true }) readonly url!: HTTP_URL;
   @Prop({ required: true }) readonly apikey!: string;
 
   @Action('newFetch') newFetch: () => void;
-  @Action('weatherAction') weatherAction: (a: fetchPayload) => any;
+  @Action('weatherAction') weatherAction: (a: fetchPayload) => Promise<void>;
 
   private town: string = '';
 

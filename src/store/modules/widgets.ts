@@ -1,6 +1,20 @@
+import { HTTP_URL } from '@/views/global-variables';
 import axios from 'axios';
 import { ActionTree, GetterTree, Module, MutationTree } from 'vuex';
 import { rootState, widgetState } from '../state.type';
+
+export interface fetchGeoPayload {
+  api: HTTP_URL;
+  lat: number;
+  lon: number;
+  key: string;
+}
+
+export interface fetchPayload {
+  api: HTTP_URL;
+  town: string;
+  key: string;
+}
 export const state: widgetState = {
   townWeather: {
     coord: {
@@ -70,14 +84,14 @@ const getters: GetterTree<widgetState, rootState> = {
 };
 
 const actions: ActionTree<widgetState, rootState> = {
-  async weatherGeolocationAction({ commit }, { api, lat, lon, key }) {
+  async weatherGeolocationAction({ commit }, { api, lat, lon, key }: fetchGeoPayload) {
     const response = axios
       .get(`${api}weather?lat=${lat}&lon=${lon}&appid=${key}&units=metric`)
       .then(res => {
         commit('FETCH_WEATHER', res.data);
       });
   },
-  async weatherAction({ commit }, { api, town, key }) {
+  async weatherAction({ commit }, { api, town, key }: fetchPayload) {
     const response = axios
       .get(`${api}weather?q=${town}&appid=${key}&units=metric`)
       .then(res => {

@@ -12,6 +12,7 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import ExtraInfo from './ExtraInfo.vue';
 import { Prop } from 'vue-property-decorator';
+import { Weather } from '@/store/state.type';
 
 @Component({
   components: {
@@ -19,7 +20,7 @@ import { Prop } from 'vue-property-decorator';
   },
 })
 export default class Info extends Vue {
-  @Prop({ required: true }) readonly info!: Array<any>;
+  @Prop({ required: true }) readonly info!: Array<Weather>;
   @Prop({ required: true }) readonly town!: string;
 }
 </script>
