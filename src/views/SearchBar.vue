@@ -1,15 +1,39 @@
 <template lang="pug">
   .search-bar
-    input.search(type="text" placeholder="Search town:" name="search-town" id='search-town')
+    input.search(type="text" placeholder="Search town:" name="search-town" id='search-town' v-model="town" v-on:keyup.enter="getWeather")
     label.search-label(for="search-town") Search town
+    button.search-button(v-on:click="getWeather") Get weather!
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
+import { Action } from 'vuex-class';
+import { HTTP_URL } from './global-variables';
 
+interface fetchPayload {
+  api: HTTP_URL;
+  town: string;
+  key: string;
+}
 @Component
-export default class SearchBar extends Vue {}
+export default class SearchBar extends Vue {
+  @Prop({ required: true }) readonly url!: HTTP_URL;
+  @Prop({ required: true }) readonly apikey!: string;
+
+  @Action('newFetch') newFetch: () => void;
+  @Action('weatherAction') weatherAction: (a: fetchPayload) => any;
+
+  private town: string = '';
+
+  private getWeather() {
+    if (this.town !== '') {
+      this.newFetch();
+      this.weatherAction({ api: this.url, town: this.town, key: this.apikey });
+    }
+  }
+}
 </script>
 
 <style lang="stylus">
@@ -60,7 +84,13 @@ $grey = #ECEFF1
   border-width: 3px
   border-color: $main
 
-.search{
-  &:required,&:invalid { box-shadow:none; }
-}
+.search
+  &:required,&:invalid
+    box-shadow:none;
+
+.search-button
+  display:block
+  margin: 1rem auto
+  padding: .5rem
+  border-radius:6px
 </style>

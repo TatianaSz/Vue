@@ -1,6 +1,13 @@
 <template lang="pug">
-  .widget
-    SearchBar
+  .widget(v-if="getPlace!==''&&fetchFailed===''")
+    SearchBar(:url='url' :apikey='apikey')
+    Temperature(:temp="getMainInfo.temp")
+    Info(:info="getWeatherDesc" :town="getPlace")
+  .widget(v-else="fetchFailed!==''") 
+    SearchBar(:url='url' :apikey='apikey')
+    .oops {{fetchFailed}}
+  .widget(v-else)
+    SearchBar(:url='url' :apikey='apikey')
 </template>
 
 <script lang="ts">
@@ -9,6 +16,9 @@ import Component from 'vue-class-component';
 import Temperature from './widget-info/Temperature.vue';
 import Info from './widget-info/Info.vue';
 import SearchBar from './SearchBar.vue';
+import { Getter } from 'vuex-class';
+import { Prop } from 'vue-property-decorator';
+import { Errors, MainInfo, PlaceName, Weather, WindInfo } from '@/store/state.type';
 
 @Component({
   components: {
@@ -18,7 +28,14 @@ import SearchBar from './SearchBar.vue';
   },
 })
 export default class Widget extends Vue {
-  private API_KEY = 'APPID=027ee07fafd9a678d925c3a9220c1289';
+  @Prop({ required: true }) readonly url!: string;
+  @Prop({ required: true }) readonly apikey!: string;
+
+  @Getter('getMainInfo') getMainInfo: MainInfo;
+  @Getter('getWindInfo') getWindInfo: WindInfo;
+  @Getter('getWeatherDesc') getWeatherDesc: Weather[];
+  @Getter('getPlace') getPlace: PlaceName;
+  @Getter('fetchFailed') fetchFailed: Errors;
 }
 </script>
 <style lang="stylus">
@@ -30,4 +47,10 @@ export default class Widget extends Vue {
   min-height: 200px
   background: rgba(150, 150, 150, 0.4)
   border-radius: 30px
+
+.oops
+  justify-content: center
+  text-align: center
+  font-size: 2rem
+  color: #EF5350
 </style>
